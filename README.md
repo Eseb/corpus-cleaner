@@ -1,4 +1,4 @@
-# Corpus cleaner
+# Corpus cleaner [![Build Status](https://travis-ci.org/Eseb/corpus-cleaner.svg?branch=master)](https://travis-ci.org/Eseb/corpus-cleaner)
 
 A selection of scripts for transforming natural-language corpus files into a clean, consistent format.
 
