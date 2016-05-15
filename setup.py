@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-setup(name="corpus_cleaner",
+setup(name="corpus-cleaner",
       version="0.1.0",
       description="Natural-language corpus cleaning scripts",
       author="Seb Bacanu",
