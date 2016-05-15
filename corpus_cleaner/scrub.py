@@ -102,14 +102,16 @@ def create_arg_parser():
 
     parser.add_argument("input", type=unicode,
                         help="Input file to scrub.")
-    parser.add_argument("-o", metavar="output-path", type=unicode,
+    parser.add_argument("-o, --output", metavar="output-path", type=unicode, dest="output",
                         help="Scrubbed version output path.")
 
     default_stop_chars = "".join(DEFAULT_STOP_CHARS)
-    parser.add_argument("--stop", metavar="stop-chars", type=unicode, default=default_stop_chars,
+    parser.add_argument("-s, --stop-chars", metavar="stop-chars", dest="stop", type=unicode, default=default_stop_chars,
                         help="Chars defining sentence boundaries. Default: {}".format(default_stop_chars))
+
     default_reorder_chars = "".join(DEFAULT_REORDER_CHARS)
-    parser.add_argument("--reorder", metavar="reorderable", type=unicode, default=default_reorder_chars,
+    parser.add_argument("-r, --reorder", metavar="reorderable", dest="reorder", type=unicode,
+                        default=default_reorder_chars,
                         help="Chars which can be swapped with stop chars. Default: {}".format(default_reorder_chars))
 
     return parser
@@ -128,14 +130,14 @@ def ensure_arg(condition_met, message):
 
 
 if __name__ == "__main__":
-    args = create_arg_parser().parse_args()
-
-    ensure_arg(exists(args.input), "Input file doesn't exist.")
+    arg_parser = create_arg_parser()
+    args = arg_parser.parse_args()
 
     parsed_stop_chars = args.stop.split()
-    ensure_arg(len(parsed_stop_chars) > 0, "Stop characters are invalid")
-
     parsed_reorder_chars = args.reorder.split()
-    ensure_arg(len(parsed_stop_chars) > 0, "Reorderable chars missing.")
 
-    scrub_file(args.input, args.o, stop_chars=parsed_stop_chars, reorder_chars=parsed_reorder_chars)
+    ensure_arg(exists(args.input), "Input file doesn't exist.", arg_parser)
+    ensure_arg(len(parsed_stop_chars) > 0, "Stop characters are invalid", arg_parser)
+    ensure_arg(len(parsed_stop_chars) > 0, "Reorderable chars missing.", arg_parser)
+
+    scrub_file(args.input, args.output, stop_chars=parsed_stop_chars, reorder_chars=parsed_reorder_chars)
