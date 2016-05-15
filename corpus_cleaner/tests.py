@@ -1,6 +1,7 @@
 from unittest import TestCase, main
 import re
-import scrub
+
+import scrubber
 import equaliser
 
 
@@ -25,7 +26,7 @@ class ScrubTest(TestCase):
                 There should be no spaces or tabs in front or at the end of this line.
                 There should only be one space between words.
             """),
-            scrub.remove_excessive_whitespace(prepare_test_string("""
+            scrubber.remove_excessive_whitespace(prepare_test_string("""
 
 
                 This line should not have any linebreaks above it, and only two below it.
@@ -40,7 +41,7 @@ class ScrubTest(TestCase):
     def test_remove_columns(self):
         self.assertEqual(
             "This paragraph is split up into columns for no good reason.",
-            scrub.remove_columns(prepare_test_string("""
+            scrubber.remove_columns(prepare_test_string("""
                 This paragraph is
                 split up into columns
                 for no good reason.
@@ -50,7 +51,7 @@ class ScrubTest(TestCase):
     def test_reorder_stop_chars(self):
         self.assertEqual(
             "American English calls full stops 'periods'; they also insert them before closing \"quotation marks\"!",
-            scrub.reorder_stop_chars(
+            scrubber.reorder_stop_chars(
                 "American English calls full stops 'periods;' they also insert them before closing \"quotation marks!\""
             )
         )
@@ -62,7 +63,7 @@ class ScrubTest(TestCase):
                 This is the second--should be on its own line.
             """),
             # One-line
-            scrub.split_as_one_sentence_per_line(prepare_test_string("""
+            scrubber.split_as_one_sentence_per_line(prepare_test_string("""
                 This is the first sentence in this paragraph. This is the second--should be on its own line.
             """))
         )
