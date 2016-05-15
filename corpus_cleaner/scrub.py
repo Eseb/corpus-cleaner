@@ -105,10 +105,12 @@ def create_arg_parser():
     parser.add_argument("-o", metavar="output-path", type=unicode,
                         help="Scrubbed version output path.")
 
-    parser.add_argument("--stop", metavar="stop-chars", type=unicode, default="".join(DEFAULT_STOP_CHARS),
-                        help="Chars defining sentence boundaries.")
-    parser.add_argument("--reorder", metavar="reorderable", type=unicode, default="".join(DEFAULT_REORDER_CHARS),
-                        help="Chars whose order can be swapped with sentence boundary chars.")
+    default_stop_chars = "".join(DEFAULT_STOP_CHARS)
+    parser.add_argument("--stop", metavar="stop-chars", type=unicode, default=default_stop_chars,
+                        help="Chars defining sentence boundaries. Default: {}".format(default_stop_chars))
+    default_reorder_chars = "".join(DEFAULT_REORDER_CHARS)
+    parser.add_argument("--reorder", metavar="reorderable", type=unicode, default=default_reorder_chars,
+                        help="Chars which can be swapped with stop chars. Default: {}".format(default_reorder_chars))
 
     return parser
 
