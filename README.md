@@ -11,6 +11,7 @@ Some helpful things `scrubber` does:
 - Removes excessive whitespace
 - Rearranges files with arbitrary columns
 - Swaps sentence-boundary-characters with wrap-closing characters (e.g. `"Hi."` -> `"Hi".`)
+- Re-encodes files to your desired codec
 
 ## Scrubber example
 

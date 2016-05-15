@@ -1,3 +1,4 @@
+import codecs
 import re
 from argparse import ArgumentParser
 from os.path import exists
@@ -6,6 +7,8 @@ from shared import DEFAULT_STOP_CHARS, join_regex, ensure_arg
 
 
 DEFAULT_REORDER_CHARS = ["\"", "'", ")", "]", "}"]
+DEFAULT_INPUT_ENCODING = "utf-8"
+DEFAULT_OUTPUT_ENCODING = "utf-8"
 
 
 def remove_excessive_whitespace(text):
@@ -73,19 +76,20 @@ def scrub(text, stop_chars=DEFAULT_STOP_CHARS, reorder_chars=DEFAULT_REORDER_CHA
     return text
 
 
-def scrub_file(input_path, output_path=None, stop_chars=DEFAULT_STOP_CHARS, reorder_chars=DEFAULT_REORDER_CHARS):
+def scrub_file(input_path, output_path=None, stop_chars=DEFAULT_STOP_CHARS, reorder_chars=DEFAULT_REORDER_CHARS,
+               input_encoding=DEFAULT_INPUT_ENCODING, output_encoding=DEFAULT_OUTPUT_ENCODING):
     """
     Run scrubbing on an entire file's contents. Overwrites if no input is given.
     """
     # Overwrite file if no output path is given
     output_path = output_path if output_path is not None else input_path
 
-    with open(input_path, "r") as input_file:
+    with codecs.open(input_path, "r", input_encoding) as input_file:
         file_contents = input_file.read()
 
     scrubbed_contents = scrub(file_contents, stop_chars=stop_chars, reorder_chars=reorder_chars)
 
-    with open(output_path, "w") as output_file:
+    with codecs.open(output_path, "w", output_encoding) as output_file:
         output_file.write(scrubbed_contents)
 
     print("Scrubbed {} to {}".format(input_path, output_path))
@@ -99,6 +103,17 @@ def create_arg_parser():
                         help="Input file to scrub.")
     parser.add_argument("-o, --output", metavar="output-path", type=unicode, dest="output",
                         help="Scrubbed version output path.")
+
+    parser.add_argument("--input-encoding", metavar="encoding", type=unicode, dest="input_encoding",
+                        default=DEFAULT_INPUT_ENCODING,
+                        help=" ".join([
+                            "What encoding to interpret the input files as being.",
+                            "Default: {}".format(DEFAULT_INPUT_ENCODING)
+                        ]))
+
+    parser.add_argument("--output-encoding", metavar="encoding", type=unicode, dest="output_encoding",
+                        default=DEFAULT_OUTPUT_ENCODING,
+                        help="What encoding to save the output files as. Default: {}".format(DEFAULT_OUTPUT_ENCODING))
 
     default_stop_chars = "".join(DEFAULT_STOP_CHARS)
     parser.add_argument("-s, --stop-chars", metavar="stop-chars", dest="stop", type=unicode, default=default_stop_chars,
@@ -123,4 +138,5 @@ if __name__ == "__main__":
     ensure_arg(len(parsed_stop_chars) > 0, "Stop characters are invalid", arg_parser)
     ensure_arg(len(parsed_stop_chars) > 0, "Reorderable chars missing.", arg_parser)
 
-    scrub_file(args.input, args.output, stop_chars=parsed_stop_chars, reorder_chars=parsed_reorder_chars)
+    scrub_file(args.input, args.output, stop_chars=parsed_stop_chars, reorder_chars=parsed_reorder_chars,
+               input_encoding=args.input_encoding, output_encoding=args.output_encoding)
