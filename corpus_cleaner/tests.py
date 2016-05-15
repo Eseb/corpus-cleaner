@@ -38,37 +38,32 @@ class ScrubTest(TestCase):
 
     def test_remove_columns(self):
         self.assertEqual(
-            prepare_test_string("""
-                One morning, when Gregor woke from troubled dreams, he found himself transformed into a horrible vermin.
-
-                He lay on his armour-like back, and if he lifted his head a little he could see his brown belly.
-            """),
+            "This paragraph is split up into columns for no good reason.",
             scrub.remove_columns(prepare_test_string("""
-                One morning, when Gregor woke from troubled dreams,
-                he found himself transformed into a horrible vermin.
-
-                He lay on his armour-like back,
-                and if he lifted his head a little he could see his brown belly.
+                This paragraph is
+                split up into columns
+                for no good reason.
             """))
         )
 
     def test_reorder_stop_chars(self):
         self.assertEqual(
-            "Gregor found himself transformed into a \"horrible vermin\".",
-            scrub.reorder_stop_chars("Gregor found himself transformed into a \"horrible vermin.\"")
+            "American English calls full stops 'periods'; they also insert them before closing \"quotation marks\"!",
+            scrub.reorder_stop_chars(
+                "American English calls full stops 'periods;' they also insert them before closing \"quotation marks!\""
+            )
         )
 
     def test_split_paragraphs(self):
         self.assertEqual(
             prepare_test_string("""
-                One morning, when Gregor woke from troubled dreams, he found himself transformed into a vermin.
-                He lay on his armour-like back, and if he lifted his head a little he could see his brown belly.
+                This is the first sentence in this paragraph.
+                This is the second--should be on its own line.
             """),
             # One-line
-            scrub.split_as_one_sentence_per_line(
-                "One morning, when Gregor woke from troubled dreams, he found himself transformed into a vermin." +
-                "He lay on his armour-like back, and if he lifted his head a little he could see his brown belly."
-            )
+            scrub.split_as_one_sentence_per_line(prepare_test_string("""
+                This is the first sentence in this paragraph. This is the second--should be on its own line.
+            """))
         )
 
 
