@@ -1,8 +1,7 @@
 from unittest import TestCase, main
 import re
 
-import scrubber
-import equaliser
+from corpus_cleaner import scrubber, equaliser
 
 
 def prepare_test_string(string):

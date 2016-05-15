@@ -1,9 +1,11 @@
+#!/usr/bin/env python
+
 import codecs
 import re
 from argparse import ArgumentParser
 from os.path import exists
 
-from shared import DEFAULT_STOP_CHARS, join_regex, ensure_arg
+from corpus_cleaner.shared import DEFAULT_STOP_CHARS, join_regex, ensure_arg
 
 
 DEFAULT_REORDER_CHARS = ["\"", "'", ")", "]", "}"]

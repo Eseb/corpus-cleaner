@@ -1,8 +1,10 @@
+#!/usr/bin/env python
+
 import re
 from argparse import ArgumentParser
 from os.path import exists, basename
 
-from shared import DEFAULT_STOP_CHARS, join_regex, ensure_arg
+from corpus_cleaner.shared import DEFAULT_STOP_CHARS, join_regex, ensure_arg
 
 DEFAULT_SENTENCE_RATIO = 0.6
 DEFAULT_LOWERCASE_GLUED = True
