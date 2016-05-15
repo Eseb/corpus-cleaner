@@ -2,15 +2,10 @@ import re
 from argparse import ArgumentParser
 from os.path import exists
 
-DEFAULT_STOP_CHARS = [".", ";", "!", "?"]
+from shared import DEFAULT_STOP_CHARS, join_regex, ensure_arg
+
+
 DEFAULT_REORDER_CHARS = ["\"", "'", ")", "]", "}"]
-
-
-def join_regex(target_list):
-    """
-    Takes a list of chars and joins then into a regex-friendly search string
-    """
-    return "|".join([re.escape(item) for item in target_list])
 
 
 def remove_excessive_whitespace(text):
@@ -115,18 +110,6 @@ def create_arg_parser():
                         help="Chars which can be swapped with stop chars. Default: {}".format(default_reorder_chars))
 
     return parser
-
-
-def ensure_arg(condition_met, message):
-    """
-    Make sure that the given arg is valid
-    """
-    if condition_met:
-        return
-
-    print(message)
-    create_arg_parser().print_usage()
-    exit()
 
 
 if __name__ == "__main__":
