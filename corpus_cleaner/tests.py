@@ -16,20 +16,23 @@ def prepare_test_string(string):
 
 class ScrubTest(TestCase):
 
-    def test_remove_excessive_linebreaks(self):
+    def test_remove_excessive_whitespace(self):
         self.assertEqual(
             prepare_test_string("""
-                One morning, when Gregor woke from troubled dreams,
+                This line should not have any linebreaks above it, and only two below it.
 
-                he found himself transformed into a horrible vermin.
+                There should be no spaces or tabs in front or at the end of this line.
+                There should only be one space between words.
             """),
-            scrub.remove_excessive_linebreaks(prepare_test_string("""
+            scrub.remove_excessive_whitespace(prepare_test_string("""
 
 
-                One morning, when Gregor woke from troubled dreams,
+                This line should not have any linebreaks above it, and only two below it.
 
 
-                 he found himself transformed into a horrible vermin.
+
+                   \tThere should be no spaces or tabs in front or at the end of this line.
+                There  should   only be    one space     between   words.
             """))
         )
 

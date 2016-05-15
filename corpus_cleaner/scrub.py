@@ -13,18 +13,22 @@ def join_regex(target_list):
     return "|".join([re.escape(item) for item in target_list])
 
 
-def remove_excessive_linebreaks(input_text):
+def remove_excessive_whitespace(text):
     """
     Ensures that there aren't too many linebreaks.
     """
     # limit blank lines to 2
-    input_text = re.sub(r"\n\n+", "\n\n", input_text)
-    # remove blank lines at the start of the document
-    input_text = re.sub(r"^\s*([^\s])", r"\1", input_text)
+    text = re.sub(r"\n\n+", r"\n\n", text)
+    # remove whitespace at the start of the document
+    text = re.sub(r"^\s*([^\s])", r"\1", text)
     # remove spaces at the start and end of lines
-    input_text = re.sub(r" *\n *", r"\n", input_text)
+    text = re.sub(r" *\n *", r"\n", text)
+    # limit consecutive spaces to 0
+    text = re.sub(r" +", " ", text)
+    # remove tabs
+    text = text.replace("\t", "")
 
-    return input_text
+    return text
 
 
 def remove_columns(input_text):
@@ -69,7 +73,7 @@ def scrub(text, stop_chars=DEFAULT_STOP_CHARS, reorder_chars=DEFAULT_REORDER_CHA
     text = reorder_stop_chars(text, stop_chars=stop_chars, reorder_chars=reorder_chars)
     text = remove_columns(text)
     text = split_as_one_sentence_per_line(text, stop_chars=stop_chars)
-    text = remove_excessive_linebreaks(text)
+    text = remove_excessive_whitespace(text)
 
     return text
 
