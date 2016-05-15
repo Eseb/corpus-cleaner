@@ -133,8 +133,8 @@ if __name__ == "__main__":
     arg_parser = create_arg_parser()
     args = arg_parser.parse_args()
 
-    parsed_stop_chars = args.stop.split()
-    parsed_reorder_chars = args.reorder.split()
+    parsed_stop_chars = list(args.stop)
+    parsed_reorder_chars = list(args.reorder)
 
     ensure_arg(exists(args.input), "Input file doesn't exist.", arg_parser)
     ensure_arg(len(parsed_stop_chars) > 0, "Stop characters are invalid", arg_parser)
