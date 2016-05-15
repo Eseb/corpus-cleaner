@@ -101,28 +101,28 @@ def create_arg_parser():
     description = "Tidies up natural language files into one-sentence-per-line easily-parsed files."
     parser = ArgumentParser(description=description)
 
-    parser.add_argument("input", type=unicode,
+    parser.add_argument("input", type=str,
                         help="Input file to scrub.")
-    parser.add_argument("-o, --output", metavar="output-path", type=unicode, dest="output",
+    parser.add_argument("-o, --output", metavar="output-path", type=str, dest="output",
                         help="Scrubbed version output path.")
 
-    parser.add_argument("--input-encoding", metavar="encoding", type=unicode, dest="input_encoding",
+    parser.add_argument("--input-encoding", metavar="encoding", type=str, dest="input_encoding",
                         default=DEFAULT_INPUT_ENCODING,
                         help=" ".join([
                             "What encoding to interpret the input files as being.",
                             "Default: {}".format(DEFAULT_INPUT_ENCODING)
                         ]))
 
-    parser.add_argument("--output-encoding", metavar="encoding", type=unicode, dest="output_encoding",
+    parser.add_argument("--output-encoding", metavar="encoding", type=str, dest="output_encoding",
                         default=DEFAULT_OUTPUT_ENCODING,
                         help="What encoding to save the output files as. Default: {}".format(DEFAULT_OUTPUT_ENCODING))
 
     default_stop_chars = "".join(DEFAULT_STOP_CHARS)
-    parser.add_argument("-s, --stop-chars", metavar="stop-chars", dest="stop", type=unicode, default=default_stop_chars,
+    parser.add_argument("-s, --stop-chars", metavar="stop-chars", dest="stop", type=str, default=default_stop_chars,
                         help="Chars defining sentence boundaries. Default: {}".format(default_stop_chars))
 
     default_reorder_chars = "".join(DEFAULT_REORDER_CHARS)
-    parser.add_argument("-r, --reorder", metavar="reorderable", dest="reorder", type=unicode,
+    parser.add_argument("-r, --reorder", metavar="reorderable", dest="reorder", type=str,
                         default=default_reorder_chars,
                         help="Chars which can be swapped with stop chars. Default: {}".format(default_reorder_chars))
 

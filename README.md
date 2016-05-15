@@ -4,7 +4,7 @@ A selection of scripts for transforming natural-language corpus files into a cle
 
 # Installation
 
-Python 2.7 is required.
+Python 2.7 or 3.2 is required.
 
 If you have `pip` on your system you can install `corpus-cleaner` through it:
 

@@ -178,9 +178,9 @@ def create_arg_parser():
     description = "Makes two corpus files of equal-sentence-length by merging sentences where it thinks appropriate."
     parser = ArgumentParser(description=description)
 
-    parser.add_argument("file_a", type=unicode,
+    parser.add_argument("file_a", type=str,
                         help="Input file A. Order is irrelevant.")
-    parser.add_argument("file_b", type=unicode,
+    parser.add_argument("file_b", type=str,
                         help="Input file B. Order is irrelevant.")
 
     parser.add_argument("-r, --ratio", dest="ratio", type=float, default=DEFAULT_SENTENCE_RATIO,
@@ -190,7 +190,7 @@ def create_arg_parser():
                         ]))
 
     default_stop_chars = "".join(DEFAULT_STOP_CHARS)
-    parser.add_argument("-s, --stop-chars", dest="stop", metavar="stop-chars", type=unicode, default=default_stop_chars,
+    parser.add_argument("-s, --stop-chars", dest="stop", metavar="stop-chars", type=str, default=default_stop_chars,
                         help="Chars defining sentence boundaries. Default: {}".format(default_stop_chars))
 
     parser.add_argument("-k, --keep-case", dest="keep_case", default=False,
